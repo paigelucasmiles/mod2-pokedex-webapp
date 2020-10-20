@@ -16,6 +16,7 @@ function displayPokemon(pokemons) {
         `
 
         <img src="${poke.photo}"/>
+        <p>${poke.id}<p>
         <h2>${poke.name}</h2>
         <p>Type: ${poke.kind}</p>
         <p>Abilities: ${poke.abilities}</p>`).join(' ')
