@@ -2,23 +2,31 @@ const backendBaseURL = "http://localhost:3000/"
 const pokemonURL = `${backendBaseURL}pokemons`
 
 const pokedex = document.getElementById('pokedex')
+const pokemonDisplay = document.getElementById('pokemon-container')
 
 fetch(pokemonURL)
     .then(parseJSON)
-    .then(displayPokemon)
+    .then(pokemons => {
+        createPokemonCards(pokemons)
+    })
 
 function parseJSON(pokemons) {
     return pokemons.json()
 }
 
-function displayPokemon(pokemons) {
-    const pokemonHTMLString = pokemons.map(poke =>
-        `
+function createPokemonCards(pokemons) {
+    pokemons.forEach(pokemon => {
+        createPokemonCard(pokemon)
+    })
+}
 
-        <img src="${poke.photo}"/>
-        <a href="/pokemon.html?pokeID=${poke.id}">${poke.name}</a>
-        <p>Type: ${poke.kind}</p>
-        <p>Abilities: ${poke.abilities}</p>`).join(' ')
-        
-        pokedex.innerHTML = pokemonHTMLString;
+function createPokemonCard(pokemon) {
+    const pokePhoto = document.createElement('img')
+    const pokeName = document.createElement('h2')
+
+    pokePhoto.src = `${pokemon.photo}`
+    pokeName.innerHTML = `<a href="/pokemon.html?pokeID=${pokemon.id}">${pokemon.name}</a>`
+
+    pokedex.append(pokemonDisplay)
+    pokemonDisplay.append(pokePhoto, pokeName)
     }
